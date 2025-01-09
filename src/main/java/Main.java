@@ -1,11 +1,22 @@
+import GUI.Window;
 import Mongo.MongoClientConnection;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import io.github.cdimascio.dotenv.Dotenv;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        new App().startThread();
+        Dotenv dotenv = Dotenv.load();
+        String connectionString = dotenv.get("MONGO_URL");
+        MongoClient mongoClient= MongoClients.create(connectionString);
+
+        MongoDatabase db=mongoClient.getDatabase("BoardFinderDB");
+
+        new App().startThread(db);
+
     }
 }
 /*

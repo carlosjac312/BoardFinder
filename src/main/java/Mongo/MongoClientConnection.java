@@ -10,6 +10,7 @@ import com.mongodb.ServerApiVersion;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.Objects;
 //This is sample code suplemented by Mongo
 public class MongoClientConnection {
@@ -19,16 +20,13 @@ public class MongoClientConnection {
         MongoClient mongoClient=MongoClients.create(connectionString);
 
         MongoDatabase db=mongoClient.getDatabase("BoardFinderDB");
-        MongoCollection<Document> collection = db.getCollection("experiment");
-
-        // El ID que deseas buscar
-        String id = "6772d9d7a8890d6437857a4f"; // Ejemplo de ObjectId en formato hexadecimal
+        MongoCollection<Document> collection = db.getCollection("users");
 
         // Convertir el ID a ObjectId
-        ObjectId objectId = new ObjectId(id);
+        ObjectId objectId = new ObjectId("6775a75f710d155853d5e73a");
 
         // Buscar el documento por _id
-        Document document = new Document("_id", objectId);
+        Document document = new Document("username", "Carlos").append("password","1234");
 
         FindIterable<Document> resultDocument = collection.find(document);
         // Return the name of the first returned document

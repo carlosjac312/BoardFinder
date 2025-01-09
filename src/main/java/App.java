@@ -1,5 +1,6 @@
 import GUI.Window;
 import StateManagement.StateManager;
+import com.mongodb.client.MongoDatabase;
 
 public class App implements Runnable{
     private Thread mainThread;
@@ -7,9 +8,9 @@ public class App implements Runnable{
     private StateManager stateManager;
     boolean kkck=true;
 
-    public void startThread(){
-        window=new Window();
-        stateManager=new StateManager(window.getMainPage(), window.getMainPage().estado);
+    public void startThread(MongoDatabase mongoDatabase){
+        window=new Window(mongoDatabase);
+        stateManager=new StateManager(window);
         stateManager.initState();
         mainThread=new Thread(this);
         mainThread.start();
