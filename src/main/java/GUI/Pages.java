@@ -26,11 +26,57 @@ public class Pages {
 }
 
 class Search extends Pages {
-    
+    JTextField textField;
+    JScrollPane scrollPane;
+    public JPanel gamespanel;
+    public JButton findButton;
+
     public Search(Functions f) {
         super(f);
         state=State.SEARCH;
         panel.setBackground(Color.green);
+        panel.setLayout(null);
+        textField=new JTextField();
+        textField.setBounds(200,60,600,40);
+        panel.add(textField);
+
+        gamespanel=new JPanel();
+        gamespanel.setLayout(new BoxLayout(gamespanel, BoxLayout.PAGE_AXIS));
+        scrollPane=new JScrollPane(gamespanel);
+        scrollPane.setBounds(100,120,800,500);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        panel.add(scrollPane);
+        for(int i=0; i<20; i++){
+            JPanel jPanel=new JPanel();
+            jPanel.setLayout(null);
+
+            jPanel.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
+            jPanel.setPreferredSize(new Dimension(800, 180)); // Tamaño preferido
+
+            JLabel label=new JLabel("GameName");
+            label.setFont(new Font("Arial", Font.PLAIN, 20));
+            label.setBounds(10,10,800,25);
+            jPanel.add(label);
+
+            JPanel infoPanel=new JPanel();
+            infoPanel.setLayout(new GridLayout(2,2));
+            infoPanel.setBounds(10,30,800,110);
+            JLabel owner=new JLabel("Sexo");
+            infoPanel.add(owner);
+            JLabel location=new JLabel("Sexo");
+            infoPanel.add(location);
+            JLabel date=new JLabel("Sexo");
+            infoPanel.add(date);
+            JLabel numplayers=new JLabel("Sexo");
+            infoPanel.add(numplayers);
+            jPanel.add(infoPanel);
+
+            JButton button=new JButton("Join");
+            button.setBounds(680,140,80,30);
+            jPanel.add(button);
+
+            gamespanel.add(jPanel);
+        }
     }
 }
 
@@ -61,7 +107,6 @@ class Create extends Pages {
         upPanel=new JPanel();
         downPanel=new JPanel();
         state=State.CREATE;
-        panel.setBackground(Color.red);
         panel.setLayout(new GridLayout(2,1));
 
         upPanel.setLayout(new GridLayout(2,2));
@@ -98,6 +143,8 @@ class Create extends Pages {
             public void actionPerformed(ActionEvent e) {
                 if (!nameField.getText().isEmpty() && !locationField.getText().isEmpty() && !dateField.getText().isEmpty()) {
                     functions.addGame(nameField.getText(),dateField.getText(),locationField.getText(), descripcion.getText(),(Integer) maxplayers.getValue());
+                    clearFields();
+                    errorLabel.setVisible(false);
                 } else errorLabel.setVisible(true);
 
             }
@@ -120,5 +167,12 @@ class Create extends Pages {
         a.add(label);
         a.add(textField);
         upPanel.add(a);
+    }
+    public void clearFields(){
+        nameField.setText("");
+        locationField.setText("");
+        dateField.setText("");
+        descripcion.setText("");
+        maxplayers.setValue(2);
     }
 }

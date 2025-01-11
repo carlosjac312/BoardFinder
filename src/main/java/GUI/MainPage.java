@@ -75,7 +75,7 @@ public class MainPage {
         a.add(new Search(mainPage.functions));
         a.add(new Create(mainPage.functions));
         for(int i=0; i<a.size(); i++){
-            a.get(i).getPanel().setVisible(i == 1); //Modificar este valor para mostrar la pagina q se quiere ver
+            a.get(i).getPanel().setVisible(i == 0); //Modificar este valor para mostrar la pagina q se quiere ver
             a.get(i).getPanel().setBounds(mainPage.getPanel().getWidth()/5,0,mainPage.getPanel().getWidth()-mainPage.getPanel().getWidth()/5, mainPage.panel.getHeight());
             mainPage.panel.add(a.get(i).getPanel());
         }

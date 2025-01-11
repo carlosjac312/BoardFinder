@@ -23,8 +23,11 @@ public class Window {
         ventana.setLocationRelativeTo(null);
         ventana.setLayout(null);
         ventana.setResizable(false);
-        login=new Login(functions);
-        ventana.add(login.getPanel());
+        //login=new Login(functions);
+        //ventana.add(login.getPanel());
+        mainPage=new MainPage(functions);//Borrar esto luego
+        ventana.add(mainPage.getPanel());//Borrar esto luego
+
         ventana.setVisible(true);
     }
 

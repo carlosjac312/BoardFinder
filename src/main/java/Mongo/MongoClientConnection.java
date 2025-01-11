@@ -1,6 +1,7 @@
 package Mongo;
 
 import com.mongodb.client.*;
+import com.mongodb.client.model.Filters;
 import io.github.cdimascio.dotenv.Dotenv;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -20,15 +21,11 @@ public class MongoClientConnection {
         MongoClient mongoClient=MongoClients.create(connectionString);
 
         MongoDatabase db=mongoClient.getDatabase("BoardFinderDB");
-        MongoCollection<Document> collection = db.getCollection("users");
+        MongoCollection<Document> collection = db.getCollection("games");
 
-        // Convertir el ID a ObjectId
-        ObjectId objectId = new ObjectId("6775a75f710d155853d5e73a");
+        //Document document = new Document("gamename","Monopoly");
 
-        // Buscar el documento por _id
-        Document document = new Document("username", "Carlos").append("password","1234");
-
-        FindIterable<Document> resultDocument = collection.find(document);
+        FindIterable<Document> resultDocument = collection.find(Filters.regex("gamename", "^mon", "i"));
         // Return the name of the first returned document
         System.out.println(resultDocument.first().toJson());
 
@@ -52,6 +49,12 @@ GET: (BY ID)
         FindIterable<Document> resultDocument = collection.find(document);
         // Return the name of the first returned document
         System.out.println(resultDocument.first().toJson());
+
+EL GET ALL es un .find() a secas luego se puede hacer un for each con un toJson() y listo
+collection.find(Filters.eq("campo", "valor")); Esto es para poner filtros
+FindIterable<Document> paginatedDocuments = collection.find().skip(10).limit(15); Esto es para skipear y poner maximo
+Filters.regex("gamename", "^Mon", "i") con esto solo buscara los que EMPIECENEN por MON la i es para que no distiga masyuculas de minusculas
+
 
 ADD:
         Document document=new Document("name","Carlos");

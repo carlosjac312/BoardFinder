@@ -15,7 +15,8 @@ public class Main {
 
         MongoDatabase db=mongoClient.getDatabase("BoardFinderDB");
 
-        new App().startThread(db);
+        //new App().startThread(db);
+        new Window(db);
 
     }
 }
