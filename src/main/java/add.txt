@@ -1,4 +1,1 @@
-La función add user esta hecha como booleana para ver si ya existe el nombre del user pero como aun no he hecho el register ni idea
-si va pero yo tengo fe
-Me estoy planteando quitar el id de los jugadores de el juego pero ya vere, porque si los jugadores ya tienen el propio id de los
-juegos en los que están pues eso.
+Se me había olvidado hacer el ultimo push, jeje, todo listo el update ya vere si lo hago

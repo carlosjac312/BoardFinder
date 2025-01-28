@@ -14,7 +14,7 @@ public class Login {
     private JPanel panel, secpanel,buttonpanel;
     private JLabel title,name,password,errorMessage;
     private JTextField username, userpassword;
-    private JButton logButton, registerButton;
+    private JButton logButton, registerButton,registerUserButton;
     public boolean loged=false;
 
     public Login(Functions functions) {
@@ -66,7 +66,33 @@ public class Login {
         });
         buttonpanel.add(logButton);
         registerButton=new JButton("Register");
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                title.setText("Register");
+                logButton.setVisible(false);
+                registerButton.setVisible(false);
+                registerUserButton.setVisible(true);
+                errorMessage.setText("The username already exist");
+            }
+        });
         buttonpanel.add(registerButton);
+
+        registerUserButton=new JButton("Register user");
+        registerUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Boolean id=functions.addUser(username.getText(), userpassword.getText());
+                if(id.equals(false)){
+                    errorMessage.setVisible(true);
+                }
+                else {
+                    loged=true;
+                }
+            }
+        });
+        registerUserButton.setVisible(false);
+        buttonpanel.add(registerUserButton);
     }
 
     public JPanel getPanel() {

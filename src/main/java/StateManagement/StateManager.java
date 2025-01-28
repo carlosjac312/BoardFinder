@@ -23,6 +23,9 @@ public class StateManager {
     public void stateChange(){
         if (window.mainPage.pressed){
             switch (window.mainPage.estado) {
+                case HOME:
+                    updatePanels(State.HOME);
+                    break;
                 case SEARCH:
                     updatePanels(State.SEARCH);
                     break;

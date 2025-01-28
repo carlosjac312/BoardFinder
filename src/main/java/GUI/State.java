@@ -1,7 +1,7 @@
 package GUI;
 
 public enum State {
-    LOGIN("Login"), HOME("Home"), SEARCH("Search"), CREATE("Create");
+    HOME("Home"), SEARCH("Search"), CREATE("Create");
 
     private String valor; // Atributo de cada constante
 

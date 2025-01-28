@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MainPage {
     public JPanel panel, buttonspanel;
-    private JButton searchButton, createButton, exitButton;
+    private JButton searchButton, createButton, homeButton,exitButton;
     public ArrayList<Pages> paginas; // [0]=CREATE, [1]=SEARCH
     public State estado;
     public boolean pressed=false;
@@ -31,9 +31,23 @@ public class MainPage {
         buttonspanel.setSize(panel.getWidth()/5,panel.getHeight());
         panel.add(buttonspanel);
 
+        homeButton=new JButton("Home");
         searchButton=new JButton("Search Game");
         createButton=new JButton("Create Board");
         exitButton=new JButton("Exit");
+
+        //Creation of the pages
+        paginas=MainPage.generatePages(this);
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                estado=State.HOME;
+                System.out.println(estado.getValor());
+                pressed=true;
+                paginas.get(0).refreshHome();
+            }
+        });
 
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -41,6 +55,7 @@ public class MainPage {
                 estado=State.SEARCH;
                 System.out.println(estado.getValor());
                 pressed=true;
+                paginas.get(1).refreshSearch();
             }
         });
         createButton.addActionListener(new ActionListener() {
@@ -58,12 +73,11 @@ public class MainPage {
             }
         });
 
+        buttonspanel.add(homeButton);
         buttonspanel.add(searchButton);
         buttonspanel.add(createButton);
         buttonspanel.add(exitButton);
 
-        //Creation of the pages
-        paginas=MainPage.generatePages(this);
     }
 
     public JPanel getPanel() {
@@ -72,6 +86,7 @@ public class MainPage {
 
     public static ArrayList<Pages> generatePages(MainPage mainPage){
         ArrayList<Pages> a=new ArrayList<>();
+        a.add(new Home(mainPage.functions));
         a.add(new Search(mainPage.functions));
         a.add(new Create(mainPage.functions));
         for(int i=0; i<a.size(); i++){

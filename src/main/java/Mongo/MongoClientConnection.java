@@ -2,6 +2,7 @@ package Mongo;
 
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
+import functions.Functions;
 import io.github.cdimascio.dotenv.Dotenv;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -21,13 +22,15 @@ public class MongoClientConnection {
         MongoClient mongoClient=MongoClients.create(connectionString);
 
         MongoDatabase db=mongoClient.getDatabase("BoardFinderDB");
-        MongoCollection<Document> collection = db.getCollection("games");
 
-        //Document document = new Document("gamename","Monopoly");
+        MongoCollection<Document> collection=db.getCollection("games");
 
-        FindIterable<Document> resultDocument = collection.find(Filters.regex("gamename", "^mon", "i"));
-        // Return the name of the first returned document
+
+        Document document = new Document("gamename", new Document("$regex", "^c").append("$options", "i"));
+
+        FindIterable<Document> resultDocument = collection.find(document);
         System.out.println(resultDocument.first().toJson());
+
 
     }
 }
