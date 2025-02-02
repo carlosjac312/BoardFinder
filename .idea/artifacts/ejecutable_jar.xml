@@ -1,13 +1,13 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="untitled:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/untitled_jar</output-path>
+  <artifact type="jar" name="ejecutable:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ejecutable_jar</output-path>
     <root id="archive" name="untitled.jar">
       <element id="module-output" name="untitled" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/bson/5.1.1/bson-5.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/bson-record-codec/5.1.1/bson-record-codec-5.1.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver-sync/5.1.1/mongodb-driver-sync-5.1.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver-core/5.1.1/mongodb-driver-core-5.1.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/github/cdimascio/dotenv-java/3.0.0/dotenv-java-3.0.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/bson-record-codec/5.1.1/bson-record-codec-5.1.1.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/bson/5.1.1/bson-5.1.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
