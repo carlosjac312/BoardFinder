@@ -1,8 +1,6 @@
 package GUI;
 
-import com.mongodb.client.MongoCollection;
 import functions.Functions;
-import org.bson.Document;
 
 import javax.swing.*;
 import java.awt.*;

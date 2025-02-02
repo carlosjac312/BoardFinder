@@ -1,9 +1,7 @@
 package StateManagement;
 
-import GUI.MainPage;
 import GUI.State;
 import GUI.Window;
-import com.mongodb.client.MongoDatabase;
 
 public class StateManager {
     private Window window;

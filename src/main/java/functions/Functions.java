@@ -56,7 +56,7 @@ public class Functions {
 
         // Guardar el ObjectId generado
         user_id = document.getObjectId("_id");
-
+        userData=userCollection.find(new Document("_id", user_id)).first();
         return true;
     }
 
@@ -179,7 +179,12 @@ public class Functions {
         userData.put("games_id", juegos); //actualizar datos locales
     }
     public ArrayList<Document> getUsergames() {
-        List<ObjectId> games=(List<ObjectId>) userData.get("games_id");
+        List<ObjectId> games;
+        try {
+            games=(List<ObjectId>) userData.get("games_id");
+        } catch (Exception e) {
+            games=new ArrayList<>();
+        }
         Document gamesList = new Document("_id", new Document("$in", games)); //filtro
         FindIterable<Document> result = gameCollection.find(gamesList); //se usa la listas de id que tiene el usario en sus datos
 
