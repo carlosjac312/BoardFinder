@@ -19,7 +19,6 @@ public class MainPage {
     public MainPage(Functions a) {
         functions=a;
         estado=State.SEARCH;
-        System.out.println(estado.getValor());
 
         panel=new JPanel();
         panel.setLayout(null);
@@ -43,7 +42,6 @@ public class MainPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 estado=State.HOME;
-                System.out.println(estado.getValor());
                 pressed=true;
                 paginas.get(0).refreshHome();
             }
@@ -53,7 +51,6 @@ public class MainPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 estado=State.SEARCH;
-                System.out.println(estado.getValor());
                 pressed=true;
                 paginas.get(1).refreshSearch();
             }
@@ -62,7 +59,6 @@ public class MainPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 estado=State.CREATE;
-                System.out.println(estado.getValor());
                 pressed=true;
             }
         });

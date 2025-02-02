@@ -29,8 +29,8 @@ public class Login {
         panel.add(title);
 
         secpanel=new JPanel();
-        secpanel.setBounds(120,142,200,140);
-        secpanel.setBackground(Color.RED);
+        secpanel.setBounds(120,142,200,170);
+        secpanel.setBackground(Color.white);
         secpanel.setLayout(new GridLayout(6,1));
         panel.add(secpanel);
 

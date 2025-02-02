@@ -13,14 +13,12 @@ import java.util.List;
 public class Functions {
     private MongoCollection<Document> userCollection;
     private MongoCollection<Document> gameCollection;
-    private MongoCollection<Document> chatCollection;
     private ObjectId user_id;
     private Document userData;
 
     public Functions(MongoDatabase mongoDatabase){
         userCollection=mongoDatabase.getCollection("users");
         gameCollection=mongoDatabase.getCollection("games");
-        chatCollection=mongoDatabase.getCollection("chats");
     }
 
     public Boolean getUser(String username, String password) {
@@ -45,7 +43,6 @@ public class Functions {
         }
 
         // Crear el usuario si no existe
-        System.out.println("Creado");
         ArrayList<String> games_id = new ArrayList<>();
         ArrayList<String> chats_id = new ArrayList<>();
 
@@ -95,8 +92,8 @@ public class Functions {
     }
     public ArrayList<Document> getGame(String gamename) {
         Document document = new Document()
-                .append("gamename", new Document("$regex", "^" + gamename).append("$options", "i"))
-                .append("players", new Document("$nin", Arrays.asList(userData.get("username"))))
+                .append("gamename", new Document("$regex", "^" + gamename).append("$options", "i")) //regex ^ para que busque los q empiezan por esa letra y la i para que ignore mayusculas y minusculas
+                .append("players", new Document("$nin", Arrays.asList(userData.get("username")))) // nin es para evitar los juegos en los que ya esta el user
                 .append("full", false);
         FindIterable<Document> resultDocument = gameCollection.find(document);
         ArrayList<Document> docsgames=new ArrayList<>();

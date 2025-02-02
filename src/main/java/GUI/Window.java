@@ -25,8 +25,6 @@ public class Window {
         ventana.setResizable(false);
         login=new Login(functions);
         ventana.add(login.getPanel());
-        //mainPage=new MainPage(functions);//Borrar esto luego
-        //ventana.add(mainPage.getPanel());//Borrar esto luego
 
         ventana.setVisible(true);
     }

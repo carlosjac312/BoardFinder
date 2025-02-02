@@ -2,15 +2,12 @@ package GUI;
 
 import functions.Functions;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyAdapter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -160,10 +157,10 @@ class Home extends Pages {
     public Home(Functions a) {
         super(a);
         state=State.HOME;
-        panel.setBackground(Color.yellow);
         panel.setLayout(null);
         title=new JLabel("My Games");
         title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setBounds(150,60,600,40);
         panel.add(title);
 
         gamespanel=new JPanel();

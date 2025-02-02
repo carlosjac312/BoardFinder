@@ -6,7 +6,6 @@ public class App implements Runnable{
     private Thread mainThread;
     private Window window;
     private StateManager stateManager;
-    boolean kkck=true;
 
     public void startThread(MongoDatabase mongoDatabase){
         window=new Window(mongoDatabase);

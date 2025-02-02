@@ -12,7 +12,7 @@ public class StateManager {
 
     public void initState(){
         while (!window.login.loged){
-            System.out.println("Log in baby boy");
+            System.out.println("Log in");
             window.getVentana().revalidate();
             window.getVentana().repaint();
         }
