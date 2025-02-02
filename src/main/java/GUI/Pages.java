@@ -29,7 +29,7 @@ public class Pages {
     public JPanel getPanel() {
         return panel;
     }
-    public JPanel createPanel(Document game, Boolean ishome, JPanel panel) {
+    public JPanel createPanel(Document game, Boolean ishome, JPanel panel) { //generación de subpaneles
         JPanel jPanel = new JPanel();
         jPanel.setLayout(null);
 
@@ -70,11 +70,11 @@ public class Pages {
 
         jPanel.add(infoPanel);
 
-        // Botón para unirse
+        // Botón de acción
         JButton button = new JButton();
         button.setBounds(680, 140, 80, 30);
         if (ishome) {
-            if(Objects.equals(game.getString("owner"), functions.getUserDataname())){
+            if(Objects.equals(game.getString("owner"), functions.getUserDataname())){ //boton delete si es dueño
                 button.setText("Delete");
                 button.addActionListener(new ActionListener() {
                     @Override
@@ -91,7 +91,7 @@ public class Pages {
                         panel.repaint();
                     }
                 });
-            } else {
+            } else { //boton exit si no es dueño
                 button.setText("Exit");
                 button.addActionListener(new ActionListener() {
                     @Override
@@ -110,7 +110,7 @@ public class Pages {
                 });
             }
 
-        } else {
+        } else { //boton de Join si no es la Interfaz de home
             button.setText("Join");
             button.addActionListener(new ActionListener() {
                 @Override
@@ -131,17 +131,16 @@ public class Pages {
 
         return jPanel;
     }
-    public void refreshHome(){
+    public void refreshHome(){ //recargar juegos en home
         gamespanel.removeAll();
         gamesdocuments=functions.getUsergames();
         for(Document game : gamesdocuments){
-            System.out.println(game.toJson());
             gamespanel.add(createPanel(game,true,gamespanel));
         }
         gamespanel.revalidate();
         gamespanel.repaint();
     }
-    public void refreshSearch(){
+    public void refreshSearch(){ //recargar juegos en search
         gamespanel.removeAll();
         gamesdocuments=functions.getAllGames(pagina);
         for(Document document: gamesdocuments){
@@ -151,7 +150,7 @@ public class Pages {
         gamespanel.repaint();
     }
 }
-
+//INTERFAZ HOME
 class Home extends Pages {
     JLabel title;
     public Home(Functions a) {
@@ -177,7 +176,7 @@ class Home extends Pages {
         }
     }
 }
-
+//INTERFAZ SEARCH
 class Search extends Pages {
     JTextField textField;
     public JButton findButton;
@@ -204,7 +203,7 @@ class Search extends Pages {
 
         findButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {//busqueda de juego por texto
                 gamespanel.removeAll();
                 gamesdocuments=functions.getGame(textField.getText());
                 for(Document document: gamesdocuments){
@@ -217,7 +216,7 @@ class Search extends Pages {
         });
     }
 }
-
+//INTERFAZ CREATE
 class Create extends Pages {
     JPanel upPanel,downPanel,mpayersPanel;
     JTextField nameField,locationField,dateField;
@@ -233,7 +232,7 @@ class Create extends Pages {
 
         try {
             // Crear un formato de fecha (dd/MM/yyyy)
-            MaskFormatter dateFormatter = new MaskFormatter("##/##/####");
+            MaskFormatter dateFormatter = new MaskFormatter("##/##/####"); //mascara para el field de la fecha
             dateFormatter.setPlaceholderCharacter('_');
 
             // Crear un JFormattedTextField con el formato de fecha
@@ -278,7 +277,7 @@ class Create extends Pages {
         button.setBounds(400,180,200,60);
         button.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) { //crear
                 if (!nameField.getText().isEmpty() && !locationField.getText().isEmpty() && !dateField.getText().isEmpty()) {
                     functions.addGame(nameField.getText(),dateField.getText(),locationField.getText(), descripcion.getText(),(Integer) maxplayers.getValue());
                     clearFields();
@@ -306,7 +305,7 @@ class Create extends Pages {
         a.add(textField);
         upPanel.add(a);
     }
-    public void clearFields(){
+    public void clearFields(){ //reinicio de los fields
         nameField.setText("");
         locationField.setText("");
         dateField.setText("");

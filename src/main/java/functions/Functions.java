@@ -16,24 +16,24 @@ public class Functions {
     private ObjectId user_id;
     private Document userData;
 
-    public Functions(MongoDatabase mongoDatabase){
+    public Functions(MongoDatabase mongoDatabase){ //constructor crea los accesos a coleciones
         userCollection=mongoDatabase.getCollection("users");
         gameCollection=mongoDatabase.getCollection("games");
     }
 
-    public Boolean getUser(String username, String password) {
+    public Boolean getUser(String username, String password) { //login
 
         Document document = new Document("username", username).append("password",password);
         try {
-            FindIterable<Document> resultDocument = userCollection.find(document);
+            FindIterable<Document> resultDocument = userCollection.find(document); //usa un documento para buscar en la bd
             userData = resultDocument.first(); // Obtener el primer documento encontrado
             user_id = userData.getObjectId("_id");
-            return true;
+            return true; //existe el user
         } catch (Exception e) {
-            return false;
+            return false; //no existe
         }
     }
-    public Boolean addUser(String username, String password) {
+    public Boolean addUser(String username, String password) { //register
         Document exist = new Document("username", username);
         FindIterable<Document> resultDocument = userCollection.find(exist);
 
@@ -60,7 +60,7 @@ public class Functions {
         return true;
     }
 
-    public void addUserToGame(ObjectId gameid) {
+    public void addUserToGame(ObjectId gameid) { //añadir usuario a partida
         Document gamefilter = new Document("_id", gameid);
 
         // Obtener el juego actual para comprobar los jugadores
@@ -82,7 +82,7 @@ public class Functions {
             Document playerfilter = new Document("_id", user_id);
             Document playerupdate = new Document("$push", new Document("games_id", gameid));
             userCollection.updateOne(playerfilter, playerupdate);
-
+            //Actualizar los datos locales
             ArrayList<ObjectId> games_id = (ArrayList<ObjectId>) userData.get("games_id");
             games_id.add(gameid);
             userData.put("games_id", games_id);
@@ -90,7 +90,7 @@ public class Functions {
             System.out.println("Error: No se encontró el juego con el ID proporcionado.");
         }
     }
-    public ArrayList<Document> getGame(String gamename) {
+    public ArrayList<Document> getGame(String gamename) {//search
         Document document = new Document()
                 .append("gamename", new Document("$regex", "^" + gamename).append("$options", "i")) //regex ^ para que busque los q empiezan por esa letra y la i para que ignore mayusculas y minusculas
                 .append("players", new Document("$nin", Arrays.asList(userData.get("username")))) // nin es para evitar los juegos en los que ya esta el user
@@ -98,14 +98,14 @@ public class Functions {
         FindIterable<Document> resultDocument = gameCollection.find(document);
         ArrayList<Document> docsgames=new ArrayList<>();
 
-        for(Document game : resultDocument){
+        for(Document game : resultDocument){ //añadir cada documnet al array
             docsgames.add(game);
         }
         return docsgames;
     }
     public ArrayList<Document> getAllGames(int pagina){
         Document filter = new Document()
-                .append("players", new Document("$nin", Arrays.asList(userData.get("username"))))
+                .append("players", new Document("$nin", Arrays.asList(userData.get("username")))) //filtros
                 .append("full", false);
         FindIterable<Document> resultDocument = gameCollection.find(filter).skip(pagina).limit(15);
         ArrayList<Document> docsgames=new ArrayList<>();
@@ -115,13 +115,13 @@ public class Functions {
         }
         return docsgames;
     }
-    public void addGame(String gamename,String date,String location, String descripcion,int max_players) {
+    public void addGame(String gamename,String date,String location, String descripcion,int max_players) { //add
         ArrayList<String> players = new ArrayList<>();
         players.add((String) userData.get("username"));
         // Crear subdocumento para gameinfo
         Document gameInfo = new Document("location", location)
                 .append("date", date)
-                .append("description", descripcion == null || descripcion.isEmpty() ? "" : descripcion);
+                .append("description", descripcion == null || descripcion.isEmpty() ? "" : descripcion); //descripción opcional
 
         Document document=new Document("gamename",gamename);
         document.append("gameinfo",gameInfo);
@@ -141,22 +141,22 @@ public class Functions {
 
         userData.put("games_id", games_id);
     }
-    public void deleteGame(ObjectId gameId) {
+    public void deleteGame(ObjectId gameId) { //delete
         Document filter = new Document("_id", gameId);
         Document game = gameCollection.find(filter).first();
         if (game != null) {
-            List<String> players = game.getList("players", String.class);
+            List<String> players = game.getList("players", String.class); //borrar el juego de los jugadores primero
             for(String a: players){
                 Document userfilter = new Document("username", a);
                 Document update = new Document("$pull", new Document("games_id", gameId));
                 userCollection.updateOne(userfilter, update);
             }
-            gameCollection.deleteOne(filter);
+            gameCollection.deleteOne(filter); //borrar el juego
         } else {
             System.out.println("Error: No se encontró el juego con el ID proporcionado.");
         }
     }
-    public void exitgame(ObjectId gameId){
+    public void exitgame(ObjectId gameId){ //update
         Document gamefilter = new Document("_id", gameId);
         Document userfilter = new Document("username", userData.get("username"));
         Document game = gameCollection.find(gamefilter).first();
@@ -167,21 +167,21 @@ public class Functions {
         if (players.size() == maxPlayers) {
             Document updategame = new Document("$pull", new Document("players", userData.get("username")))
                     .append("$set", new Document("full", false));
-            gameCollection.updateOne(gamefilter, updategame);
+            gameCollection.updateOne(gamefilter, updategame); //quitar el juagador del juego y si estaba lleno ponerlo a no lleno
         } else {
             Document updategame = new Document("$pull", new Document("players", userData.get("username")));
-            gameCollection.updateOne(gamefilter, updategame);
+            gameCollection.updateOne(gamefilter, updategame); //quitar el jugador del juego
         }
         Document updateplayer = new Document("$pull", new Document("games_id", gameId));
-        userCollection.updateOne(userfilter,updateplayer);
+        userCollection.updateOne(userfilter,updateplayer); //quitar el juego del user
         List<ObjectId> juegos = userData.getList("games_id", ObjectId.class);
         juegos.remove(gameId);
-        userData.put("games_id", juegos);
+        userData.put("games_id", juegos); //actualizar datos locales
     }
     public ArrayList<Document> getUsergames() {
         List<ObjectId> games=(List<ObjectId>) userData.get("games_id");
-        Document gamesList = new Document("_id", new Document("$in", games));
-        FindIterable<Document> result = gameCollection.find(gamesList);
+        Document gamesList = new Document("_id", new Document("$in", games)); //filtro
+        FindIterable<Document> result = gameCollection.find(gamesList); //se usa la listas de id que tiene el usario en sus datos
 
         ArrayList<Document> docsgames=new ArrayList<>();
 

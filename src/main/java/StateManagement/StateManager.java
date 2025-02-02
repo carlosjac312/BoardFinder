@@ -10,7 +10,7 @@ public class StateManager {
 
     public StateManager(Window a) {window=a;}
 
-    public void initState(){
+    public void initState(){ //estado inicial
         while (!window.login.loged){
             System.out.println("Log in");
             window.getVentana().revalidate();
@@ -20,7 +20,7 @@ public class StateManager {
         stateChange();
     }
 
-    public void stateChange(){
+    public void stateChange(){ //manejador del estado
         if (window.mainPage.pressed){
             switch (window.mainPage.estado) {
                 case HOME:
@@ -38,7 +38,7 @@ public class StateManager {
             window.mainPage.pressed=false;
         }
     }
-    public void updatePanels(State a){
+    public void updatePanels(State a){ //hacer páginas visibles o no
         for(int i=0; i<window.mainPage.paginas.size(); i++) {
             window.mainPage.paginas.get(i).getPanel().setVisible(window.mainPage.paginas.get(i).state==a);
         }

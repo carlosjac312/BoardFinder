@@ -6,7 +6,7 @@ import functions.Functions;
 import javax.swing.*;
 import java.awt.*;
 
-public class Window {
+public class Window { //Base de la interfaz con el marco y donde se añaden todos los elementos
     private JFrame ventana;
     public MainPage mainPage;
     public Login login;

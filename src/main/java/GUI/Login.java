@@ -54,7 +54,7 @@ public class Login {
         logButton=new JButton("Log in");
         logButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) { //lanzar funcion de login
                 Boolean id=functions.getUser(username.getText(), userpassword.getText());
                 if(id.equals(false)){
                     errorMessage.setVisible(true);
@@ -66,7 +66,7 @@ public class Login {
         });
         buttonpanel.add(logButton);
         registerButton=new JButton("Register");
-        registerButton.addActionListener(new ActionListener() {
+        registerButton.addActionListener(new ActionListener() { //activar la interfaz de register
             @Override
             public void actionPerformed(ActionEvent e) {
                 title.setText("Register");
@@ -79,7 +79,7 @@ public class Login {
         buttonpanel.add(registerButton);
 
         registerUserButton=new JButton("Register user");
-        registerUserButton.addActionListener(new ActionListener() {
+        registerUserButton.addActionListener(new ActionListener() { //lanzar funcion de register
             @Override
             public void actionPerformed(ActionEvent e) {
                 Boolean id=functions.addUser(username.getText(), userpassword.getText());

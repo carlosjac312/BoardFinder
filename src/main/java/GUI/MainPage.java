@@ -37,7 +37,7 @@ public class MainPage {
 
         //Creation of the pages
         paginas=MainPage.generatePages(this);
-
+        //Todos los botones para cambiar el estado y actualizar la página
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +80,7 @@ public class MainPage {
         return panel;
     }
 
-    public static ArrayList<Pages> generatePages(MainPage mainPage){
+    public static ArrayList<Pages> generatePages(MainPage mainPage){ //generar las páginas
         ArrayList<Pages> a=new ArrayList<>();
         a.add(new Home(mainPage.functions));
         a.add(new Search(mainPage.functions));

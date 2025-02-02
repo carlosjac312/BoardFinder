@@ -1,5 +1,5 @@
 package GUI;
-
+//enum para los estados
 public enum State {
     HOME("Home"), SEARCH("Search"), CREATE("Create");
 
